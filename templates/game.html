@@ -64,7 +64,45 @@
 
         startTimer();
 
-        // when next puzzle button clicked
+
+        // handle submittting answer
+        $('#submit-answer').click(function() {
+            const answer = $('#answer').val().trim();
+            if (answer === "") {
+                $('#result-message').text("Please enter an answer.");
+                return;
+            }
+
+            $.post('/check_answer', { answer: answer }, function(data) {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+
+                $('#result-message').text(data.message);
+                $('#attempts-left').text(data.attempts_left);
+
+                if (data.correct || data.puzzle_completed) {
+                    $('#submit-answer').prop('disabled', true);
+                    $('#get-hint').prop('disabled', true);
+                    $('#next-puzzle').prop('disabled', false);
+                    clearInterval(timerInterval);
+                }
+
+                if (data.game_over) {
+                    $('#result-message').text("Game Over! No attempts left.");
+                    $('#submit-answer').prop('disabled', true);
+                    $('#get-hint').prop('disabled', true);
+                    $('#next-puzzle').prop('disabled', false);
+                    clearInterval(timerInterval);
+                }
+            }).fail(function() {
+                $('#result-message').text("Error checking the answer. Please try again.");
+            });
+        });
+
+
+        // handle next puzzle button click
         $('#next-puzzle').click(function() {
             $.post('/next_puzzle', {}, function(response) {
                 if (response.status === "success") {

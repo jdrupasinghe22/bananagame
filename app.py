@@ -191,6 +191,48 @@ def next_puzzle():
         "level": level
     })
 
+# Route for checking the answer
+@app.route('/check_answer', methods=['POST'])
+def check_answer():
+    answer = request.form['answer']
+    correct_solution = session['current_solution']
+    player_name = session['player_name']
+    players = load_players()
+    player_data = players.get(player_name, {})
+    response = {"correct": answer == correct_solution}
+
+    if answer == correct_solution:
+        session['puzzle_completed'] = True
+        response["message"] = "Correct Answer!"
+        player_data['correct_count'] += 1
+
+        # Check if the player needs to level up
+        if player_data['correct_count'] >= 3:
+            player_data['level'] += 1
+            player_data['correct_count'] = 0
+            response["message"] += " You leveled up!"
+
+            # If the player reaches level 5, they win the game
+            if player_data['level'] >= 5:
+                session['game_won'] = True
+                save_players(players)
+                return jsonify({"redirect": url_for('you_won')})
+
+        save_players(players)
+    else:
+        session['attempts_left'] -= 1
+        if session['attempts_left'] <= 0:
+            session['puzzle_completed'] = True
+            session['game_over'] = True
+            response["message"] = "Game Over! No attempts left."
+        else:
+            response["message"] = "Incorrect Answer. Try again."
+
+    response["level"] = player_data['level']
+    response["correct_count"] = player_data['correct_count']
+    response["attempts_left"] = session['attempts_left']
+    response["game_over"] = session.get('game_over', False)
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(debug=True)
