@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Puzzle Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="left-panel">
+            <h2>Level: <span id="level">{{ level }}</span></h2>
+            <div class="puzzle-card">
+                <img src="{{ question }}" alt="Puzzle Image" class="puzzle-image">
+            </div>
+            <div class="game-button-group">
+                <input type="text" id="answer" class="answer-input" placeholder="Enter your answer" required>
+                <button id="submit-answer" class="game-primary-button">Submit</button>
+            </div>
+            <div class="button-group">
+                <button id="get-hint" class="game-secondary-button">Get Hint</button>
+                <button id="next-puzzle" class="game-primary-button" disabled>Next Puzzle</button>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="stats-container">
+                <p id="hint-message"></p>
+                <p id="result-message"></p>
+                <p>Attempts Left: <span id="attempts-left">{{ attempts_left }}</span></p>
+                <p>Hints Left: <span id="hints-left">{{ hints_left }}</span></p>
+                <p>Puzzles Solved in Level: <span id="correct-count">{{ correct_count }}</span> / 3</p>
+                <p>Time Left: <span id="time-left">{{ time_left }}</span> seconds</p>
+            </div>
+            <button class="arrow-button" onclick="window.location.href='/main_menu'">&#x2190; Main Menu</button>
+            <button class="profile-button" onclick="window.location.href='/profile'">Profile</button>
+        </div>
+    </div>
