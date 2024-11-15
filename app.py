@@ -58,3 +58,19 @@ def signup():
             initialize_player_session(username)
             return redirect(url_for('main_menu'))
     return render_template('signup.html')
+
+# Route for the login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    players = load_players()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username in players and players[username]['password'] == password:
+            initialize_player_session(username)
+            return redirect(url_for('main_menu'))
+        else:
+            flash("Invalid username or password. Please try again.")
+    return render_template('login.html')
+
+
