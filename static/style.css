@@ -505,3 +505,119 @@ li {
     cursor: not-allowed;
     box-shadow: 0 4px #666
 }
+
+/* You Won Page Styles */
+.you-won-page {
+    background-color: #1a1a2e;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    animation: background-glow 2s infinite alternate;
+}
+
+.celebration-container {
+    background-color: #2e2e48;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    animation: pop-in 0.5s ease-in-out;
+}
+
+.celebration-container h1 {
+    color: #ffba02;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.celebration-container p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #00d084;
+}
+
+/* Back to Menu Button */
+.back-to-menu-button {
+    background-color: #ff4848;
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #cc3838;
+}
+
+.back-to-menu-button:hover {
+    background-color: #ff6f6f;
+    transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes pop-in {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes background-glow {
+    0% {
+        background-color: #1a1a2e;
+    }
+    100% {
+        background-color: #090aff;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 800px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-panel,
+    .right-panel {
+        max-width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .answer-input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .arrow-button,
+    .profile-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    #hint-message,
+    #result-message {
+        font-size: 16px;
+    }
+}
