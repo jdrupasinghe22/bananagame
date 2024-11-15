@@ -73,4 +73,9 @@ def login():
             flash("Invalid username or password. Please try again.")
     return render_template('login.html')
 
-
+# Route for the main menu
+@app.route('/main_menu')
+def main_menu():
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('main_menu.html', player_name=session['player_name'])
+    return redirect(url_for('login'))

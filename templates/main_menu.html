@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="main-menu-container">
+        <h2>Welcome, {{ player_name }}!</h2>
+        <div class="button-group">
+            <button class="primary-button" onclick="window.location.href='/game'">Start Game</button>
+            <button class="secondary-button" onclick="window.location.href='/profile'">Player Profile</button>
+            <button class="nav-button" onclick="window.location.href='/how_to_play'">How to Play</button>
+            <button class="back-button" onclick="window.location.href='/logout'">Logout</button>
+        </div>
+    </div>
+</body>
+</html>
