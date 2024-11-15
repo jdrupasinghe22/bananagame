@@ -37,3 +37,35 @@
             <button class="profile-button" onclick="window.location.href='/profile'">Profile</button>
         </div>
     </div>
+
+    <script>
+        // when next puzzle button clicked
+        $('#next-puzzle').click(function() {
+            $.post('/next_puzzle', {}, function(response) {
+                if (response.status === "success") {
+                    $('#result-message').text('');
+                    $('#hint-message').text('');
+                    $('#answer').val('');
+                    $('#attempts-left').text(response.attempts_left);
+                    $('#hints-left').text(response.hints_left);
+                    $('#time-left').text(response.time_left);
+                    $('#correct-count').text(response.correct_count);
+                    $('#level').text(response.level);
+                    $('#submit-answer').prop('disabled', false);
+                    $('#get-hint').prop('disabled', false);
+                    $('#next-puzzle').prop('disabled', true);
+                    $('img').attr('src', response.question);
+
+                    clearInterval(timerInterval);
+                    timeLeft = response.time_left;
+                    startTimer();
+                } else if (response.redirect) {
+                    window.location.href = response.redirect;
+                } else {
+                    $('#result-message').text("Error loading the next puzzle. Please try again.");
+                }
+            }).fail(function() {
+                $('#result-message').text("Failed to fetch the next puzzle. Please try again.");
+            });
+        });
+    </script>
