@@ -279,5 +279,12 @@ def get_hint():
 
     return jsonify({"hint": "No hints left!", "hints_left": session['hints_left']})
 
+# Route for winner page
+@app.route('/you_won')
+def you_won():
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('you_won.html')
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(debug=True)
