@@ -235,3 +235,114 @@ label {
     transform: translateY(-3px);
 }
 
+/* Game Image */
+img {
+    border: 5px solid #090aff;
+    border-radius: 10px;
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Profile Page */
+.profile-container {
+    background-color: #2e2e48;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-container h2 {
+    color: #ffba02;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.profile-details p {
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+/* Arrow Button */
+.arrow-button {
+    background-color: #4d4d5e;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #3b3b4a;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.arrow-button:hover {
+    background-color: #666;
+    transform: translateY(-2px);
+}
+
+/* How to Play */
+.how-to-play-container {
+    background-color: #2e2e48;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.how-to-play-container p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+/* Level Table */
+.level-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.level-table th,
+.level-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ffba02;
+    color: #ffffff;
+}
+
+.level-table th {
+    background-color: #090aff;
+}
+
+.level-table td {
+    background-color: #333;
+}
+
+/* List */
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
