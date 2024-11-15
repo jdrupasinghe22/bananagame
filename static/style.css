@@ -346,3 +346,162 @@ li {
     font-size: 16px;
     margin-bottom: 10px;
 }
+
+/* Game Container */
+.game-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Left Panel- Puzzle and Input */
+.left-panel {
+    flex: 1;
+    max-width: 60%;
+    text-align: left;
+}
+
+/* Right Panel- Stats */
+.right-panel {
+    flex: 0.4;
+    background-color: #2e2e48;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+/* Puzzle Image */
+.puzzle-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 5px solid #090aff;
+    margin-bottom: 20px;
+}
+
+/* Input Group */
+.game-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Input Field for Answer */
+.answer-input {
+    width: 70%;
+    padding: 12px;
+    border: 2px solid #090aff;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #1a1a2e;
+    color: #ffffff;
+}
+
+/* Stats Container */
+.stats-container {
+    padding: 10px;
+}
+
+#hint-message,
+#result-message {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#hint-message {
+    color: #ffba02;
+}
+
+#result-message {
+    color: #ff4848;
+}
+
+/* Attempts, Hints, Correct Count, Timer Display */
+#attempts-left,
+#hints-left,
+#correct-count,
+#time-left {
+    font-size: 20px;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+/* Correct Count */
+#correct-count {
+    color: #00d084;
+}
+
+/* Profile Button */
+.profile-button {
+    background-color: #00d084;
+    color: #1a1a2e;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #00a664;
+}
+
+.profile-button:hover {
+    background-color: #33e4a1;
+    transform: translateY(-2px);
+}
+
+/* Submit, Hint, and Next Puzzle Button group */
+.game-button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Submit, Hint, Next Puzzle Buttons */
+.game-primary-button {
+    background-color: #ffba02;
+    color: #1a1a2e;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px #cc9500;
+}
+
+.game-primary-button:hover {
+    background-color: #ffd54f;
+    transform: translateY(-2px);
+}
+
+/* Hint Button  */
+.game-secondary-button {
+    background-color: #090aff;
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px #0708cc;
+}
+
+.game-secondary-button:hover {
+    background-color: #4d4fff;
+    transform: translateY(-2px);
+}
+
+/* Disabled Button */
+.game-button:disabled {
+    background-color: #666;
+    color: #ccc;
+    cursor: not-allowed;
+    box-shadow: 0 4px #666
+}
