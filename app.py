@@ -84,3 +84,21 @@ def main_menu():
 @app.route('/how_to_play')
 def how_to_play():
     return render_template('how_to_play.html')
+
+# Route for the player profile
+@app.route('/profile')
+def profile():
+    if 'logged_in' in session and session['logged_in']:
+        player_name = session['player_name']
+        players = load_players()
+        player_data = players.get(player_name, {})
+        level = player_data.get('level', 0)
+        return render_template('profile.html', player_name=player_name, level=level)
+    return redirect(url_for('login'))
+
+# Route for logging out
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
