@@ -234,5 +234,50 @@ def check_answer():
     response["game_over"] = session.get('game_over', False)
     return jsonify(response)
 
+# Route for getting hints
+@app.route('/get_hint', methods=['POST'])
+def get_hint():
+    if session['hints_left'] > 0:
+        session['hints_left'] -= 1
+        correct_solution = int(session['current_solution'])
+        hint = ""
+
+        # Determine which hint to give based on the number of hints left
+        hints_given = 3 - session['hints_left']
+
+        if hints_given == 1:
+            # Hint 1: Odd or Even
+            if correct_solution % 2 == 0:
+                hint = "Hint 1: The answer is an even number."
+            else:
+                hint = "Hint 1: The answer is an odd number."
+
+        elif hints_given == 2:
+            # Hint 2: Multiple of 2, 3, 4, or 5
+            multiples = []
+            if correct_solution % 2 == 0:
+                multiples.append("2")
+            if correct_solution % 3 == 0:
+                multiples.append("3")
+            if correct_solution % 4 == 0:
+                multiples.append("4")
+            if correct_solution % 5 == 0:
+                multiples.append("5")
+
+            if multiples:
+                hint = f"Hint 2: The answer is a multiple of {' or '.join(multiples)}."
+            else:
+                hint = "Hint 2: The answer is not a multiple of 2, 3, 4, or 5."
+
+        elif hints_given == 3:
+            # Hint 3: Range of numbers
+            lower_limit = (correct_solution // 4) * 4
+            upper_limit = lower_limit + 4
+            hint = f"Hint 3: The number is in the range {lower_limit} to {upper_limit}."
+
+        return jsonify({"hint": hint, "hints_left": session['hints_left']})
+
+    return jsonify({"hint": "No hints left!", "hints_left": session['hints_left']})
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -101,6 +101,20 @@
             });
         });
 
+        // get hints
+        $('#get-hint').click(function() {
+            $.post('/get_hint', {}, function(data) {
+                $('#hint-message').text(data.hint);
+                $('#hints-left').text(data.hints_left);
+
+                if (data.hints_left <= 0) {
+                    $('#get-hint').prop('disabled', true);
+                }
+            }).fail(function() {
+                $('#hint-message').text("Error fetching hint. Please try again.");
+            });
+        });
+
 
         // handle next puzzle button click
         $('#next-puzzle').click(function() {
