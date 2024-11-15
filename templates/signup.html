@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create Your Account</h2>
+        <form action="/signup" method="post">
+            <div class="input-group">
+                <label for="username">Player Name:</label>
+                <input type="text" name="username" id="username" placeholder="Choose a player name" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Enter a password" required>
+            </div>
+            <div class="input-group">
+                <label for="re_password">Re-enter Password:</label>
+                <input type="password" name="re_password" id="re_password" placeholder="Re-enter your password" required>
+            </div>
+            <button type="submit" class="primary-button">Sign Up</button>
+            <button type="button" class="back-button" onclick="window.location.href='/'">Back</button>
+        </form>
+
+        <!-- Display flash messages for errors -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <p class="login-link">Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
