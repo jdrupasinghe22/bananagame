@@ -1,0 +1,237 @@
+body {
+    background-color: #1a1a2e;
+    color: #ffffff; 
+    font-family: 'Verdana', sans-serif;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* General Heading */
+h1, h2 {
+    color: #ffba02; 
+    margin-bottom: 20px;
+}
+
+/* Landing Page */
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+.intro-text {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+/* Buttons */
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Primary Button */
+.primary-button {
+    background-color: #ffba02;
+    color: #1a1a2e;
+    box-shadow: 0 5px #cc9500;
+}
+
+.primary-button:hover {
+    background-color: #ffd54f;
+    transform: translateY(-3px);
+}
+
+/* Secondary Button */
+.secondary-button {
+    background-color: #090aff;
+    color: #ffffff;
+    box-shadow: 0 5px #0708cc;
+}
+
+.secondary-button:hover {
+    background-color: #4d4fff;
+    transform: translateY(-3px);
+}
+
+/* Disabled Button */
+button:disabled {
+    background-color: #666;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #090aff;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #1a1a2e;
+    color: #ffffff;
+}
+
+/* Login and Sign-Up */
+.login-container,
+.signup-container {
+    background-color: #2e2e48;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Error Message */
+.error-message {
+    background-color: #ff4848;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Signup and Login Links */
+.signup-link,
+.login-link {
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.signup-link a,
+.login-link a {
+    color: #00d084;
+    text-decoration: none;
+}
+
+.signup-link a:hover,
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Main Menu */
+.main-menu-container {
+    background-color: #2e2e48;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main-menu-container h2 {
+    color: #ffba02;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Main Menu Buttons */
+.primary-button {
+    background-color: #ffba02;
+    color: #1a1a2e;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #cc9500;
+}
+
+.primary-button:hover {
+    background-color: #ffd54f;
+    transform: translateY(-3px);
+}
+
+.secondary-button {
+    background-color: #090aff;
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #0708cc;
+}
+
+.secondary-button:hover {
+    background-color: #4d4fff;
+    transform: translateY(-3px);
+}
+
+.nav-button {
+    background-color: #00d084;
+    color: #1a1a2e;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #00a664;
+}
+
+.nav-button:hover {
+    background-color: #33e4a1;
+    transform: translateY(-3px);
+}
+
+.back-button {
+    background-color: #ff4848;
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 5px #cc3838;
+}
+
+.back-button:hover {
+    background-color: #ff6f6f;
+    transform: translateY(-3px);
+}
+
