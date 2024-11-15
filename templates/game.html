@@ -39,6 +39,31 @@
     </div>
 
     <script>
+        // timer function
+        let timeLeft = parseInt($('#time-left').text());
+        let timerInterval;
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                $('#time-left').text(timeLeft);
+            } else {
+                $('#result-message').text("Game Over! Time's up.");
+                $('#submit-answer').prop('disabled', true);
+                $('#get-hint').prop('disabled', true);
+                $('#next-puzzle').prop('disabled', false);
+                clearInterval(timerInterval);
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = parseInt($('#time-left').text());
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        startTimer();
+
         // when next puzzle button clicked
         $('#next-puzzle').click(function() {
             $.post('/next_puzzle', {}, function(response) {
