@@ -79,3 +79,8 @@ def main_menu():
     if 'logged_in' in session and session['logged_in']:
         return render_template('main_menu.html', player_name=session['player_name'])
     return redirect(url_for('login'))
+
+# Route for the how-to-play page
+@app.route('/how_to_play')
+def how_to_play():
+    return render_template('how_to_play.html')
