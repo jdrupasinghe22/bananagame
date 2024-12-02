@@ -1,1 +1,42 @@
-{}
+{
+    "Winner": {
+        "password": "winnerplayer",
+        "level": 5,
+        "correct_count": 0
+    },
+    "playerl4": {
+        "password": "playerl4",
+        "level": 4,
+        "correct_count": 1
+    },
+    "playerl3": {
+        "password": "playerl3",
+        "level": 3,
+        "correct_count": 1
+    },
+    "playerl2": {
+        "password": "playerl2",
+        "level": 2,
+        "correct_count": 1
+    },
+    "playerl1": {
+        "password": "playerl1",
+        "level": 1,
+        "correct_count": 1
+    },
+    "playerl0": {
+        "password": "playerl0",
+        "level": 0,
+        "correct_count": 1
+    },
+    "newplayer": {
+        "password": "newplayer",
+        "level": 0,
+        "correct_count": 0
+    },
+    "testplayer": {
+        "password": "testplayer",
+        "level": 0,
+        "correct_count": 0
+    }
+}

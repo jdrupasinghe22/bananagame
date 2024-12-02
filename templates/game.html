@@ -32,6 +32,10 @@
                 <p>Hints Left: <span id="hints-left">{{ hints_left }}</span></p>
                 <p>Puzzles Solved in Level: <span id="correct-count">{{ correct_count }}</span> / 3</p>
                 <p>Time Left: <span id="time-left">{{ time_left }}</span> seconds</p>
+                <div>
+                <hr>
+                <p>Correct Answer (For Testing): <span id="solution">{{ solution }}</span></p>
+                </div>
             </div>
             <button class="arrow-button" onclick="window.location.href='/main_menu'">&#x2190; Main Menu</button>
             <button class="profile-button" onclick="window.location.href='/profile'">Profile</button>
@@ -39,7 +43,6 @@
     </div>
 
     <script>
-        // timer function
         let timeLeft = parseInt($('#time-left').text());
         let timerInterval;
 
@@ -64,44 +67,55 @@
 
         startTimer();
 
+        $('#submit-answer').click(function () {
+    const answer = $('#answer').val().trim();
+    if (answer === "") {
+        $('#result-message').text("Please enter an answer.").css("color", "#ff4848");
+        return;
+    }
 
-        // handle submittting answer
-        $('#submit-answer').click(function() {
-            const answer = $('#answer').val().trim();
-            if (answer === "") {
-                $('#result-message').text("Please enter an answer.");
-                return;
-            }
+    // Check if the input is a valid number
+    if (isNaN(answer)) {
+        $('#result-message').text("Please enter a number.").css("color", "#ff4848");
+        return;
+    }
 
-            $.post('/check_answer', { answer: answer }, function(data) {
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                    return;
-                }
+    $.post('/check_answer', { answer: answer }, function (data) {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+            return;
+        }
 
-                $('#result-message').text(data.message);
-                $('#attempts-left').text(data.attempts_left);
+        // Update the message color based on correctness
+        if (data.correct) {
+            $('#result-message').text(data.message).css("color", "#00d084"); // Green for correct answer
+        } else {
+            $('#result-message').text(data.message).css("color", "#ff4848"); // Red for incorrect answer
+        }
 
-                if (data.correct || data.puzzle_completed) {
-                    $('#submit-answer').prop('disabled', true);
-                    $('#get-hint').prop('disabled', true);
-                    $('#next-puzzle').prop('disabled', false);
-                    clearInterval(timerInterval);
-                }
+        $('#attempts-left').text(data.attempts_left);
 
-                if (data.game_over) {
-                    $('#result-message').text("Game Over! No attempts left.");
-                    $('#submit-answer').prop('disabled', true);
-                    $('#get-hint').prop('disabled', true);
-                    $('#next-puzzle').prop('disabled', false);
-                    clearInterval(timerInterval);
-                }
-            }).fail(function() {
-                $('#result-message').text("Error checking the answer. Please try again.");
-            });
-        });
+        // Handle puzzle completion or game over
+        if (data.correct || data.puzzle_completed) {
+            $('#submit-answer').prop('disabled', true);
+            $('#get-hint').prop('disabled', true);
+            $('#next-puzzle').prop('disabled', false);
+            clearInterval(timerInterval);
+        }
 
-        // get hints
+        if (data.game_over) {
+            $('#result-message').text("Game Over! No attempts left.").css("color", "#ff4848");
+            $('#submit-answer').prop('disabled', true);
+            $('#get-hint').prop('disabled', true);
+            $('#next-puzzle').prop('disabled', false);
+            clearInterval(timerInterval);
+        }
+    }).fail(function () {
+        $('#result-message').text("Error checking the answer. Please try again.").css("color", "#ff4848");
+    });
+});
+
+
         $('#get-hint').click(function() {
             $.post('/get_hint', {}, function(data) {
                 $('#hint-message').text(data.hint);
@@ -115,8 +129,6 @@
             });
         });
 
-
-        // handle next puzzle button click
         $('#next-puzzle').click(function() {
             $.post('/next_puzzle', {}, function(response) {
                 if (response.status === "success") {
@@ -132,6 +144,7 @@
                     $('#get-hint').prop('disabled', false);
                     $('#next-puzzle').prop('disabled', true);
                     $('img').attr('src', response.question);
+                    $('#solution').text(response.solution); // for demo
 
                     clearInterval(timerInterval);
                     timeLeft = response.time_left;
@@ -146,3 +159,5 @@
             });
         });
     </script>
+</body>
+</html>
