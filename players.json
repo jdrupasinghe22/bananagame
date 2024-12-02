@@ -36,7 +36,7 @@
     },
     "testplayer": {
         "password": "testplayer",
-        "level": 0,
-        "correct_count": 0
+        "level": 1,
+        "correct_count": 2
     }
 }

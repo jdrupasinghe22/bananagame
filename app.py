@@ -4,12 +4,17 @@ import json
 import time
 from datetime import timedelta
 import sys
+from dotenv import load_dotenv
+import os
 
 # Disable output buffering for print statements
 sys.stdout.reconfigure(line_buffering=True)
 
 app = Flask(__name__)
 app.secret_key = 'banana_secret_key'
+
+load_dotenv()  # Load environment variables from .env
+FREESOUND_API_KEY = os.getenv('FREESOUND_API_KEY')
 
 # Load player data from JSON file
 def load_players():
@@ -163,7 +168,7 @@ def game():
     )
 
 
-# AJAX route for checking the answer
+# Route for checking the answer
 @app.route('/check_answer', methods=['POST'])
 def check_answer():
     answer = request.form['answer']
@@ -208,7 +213,7 @@ def check_answer():
 
 
 
-# AJAX route for "Next Puzzle"
+# Route for "Next Puzzle"
 @app.route('/next_puzzle', methods=['POST'])
 def next_puzzle():
     question, solution = get_puzzle()
@@ -289,6 +294,28 @@ def you_won():
     if 'logged_in' in session and session['logged_in']:
         return render_template('you_won.html')
     return redirect(url_for('login'))
+
+@app.route('/get_sound', methods=['GET'])
+def get_sound():
+    sound_type = request.args.get('type', 'correct')
+    
+    if sound_type == 'correct':
+        query = 'success sound'
+    else:
+        query = 'error sound'
+
+    # API call to Freesound
+    url = f'https://freesound.org/apiv2/search/text/?query={query}&token={FREESOUND_API_KEY}&fields=previews&filter=duration:[1.0 TO 2.0]'
+    response = requests.get(url)
+    data = response.json()
+
+    if 'results' in data and len(data['results']) > 0:
+        
+        sound_url = data['results'][0]['previews']['preview-hq-mp3']
+        return jsonify({'sound_url': sound_url})
+
+    return jsonify({'error': 'No sound found'}), 404
+
 
 
 if __name__ == '__main__':

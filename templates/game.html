@@ -32,10 +32,12 @@
                 <p>Hints Left: <span id="hints-left">{{ hints_left }}</span></p>
                 <p>Puzzles Solved in Level: <span id="correct-count">{{ correct_count }}</span> / 3</p>
                 <p>Time Left: <span id="time-left">{{ time_left }}</span> seconds</p>
-                <div>
-                <hr>
-                <p>Correct Answer (For Testing): <span id="solution">{{ solution }}</span></p>
-                </div>
+
+                <!-- Display the correct answer for testing purposes -->
+                <!-- <div>
+                    <hr>
+                    <p>Correct Answer (For Testing): <span id="solution">{{ solution }}</span></p>
+                </div> -->
             </div>
             <button class="arrow-button" onclick="window.location.href='/main_menu'">&#x2190; Main Menu</button>
             <button class="profile-button" onclick="window.location.href='/profile'">Profile</button>
@@ -45,7 +47,9 @@
     <script>
         let timeLeft = parseInt($('#time-left').text());
         let timerInterval;
+        const sounds = {};
 
+        // Update the timer
         function updateTimer() {
             if (timeLeft > 0) {
                 timeLeft--;
@@ -67,95 +71,133 @@
 
         startTimer();
 
-        $('#submit-answer').click(function () {
-    const answer = $('#answer').val().trim();
-    if (answer === "") {
-        $('#result-message').text("Please enter an answer.").css("color", "#ff4848");
-        return;
-    }
+        // Preload sounds
+        function preloadSounds() {
+            const soundUrls = {
+                correct: '/get_sound?type=correct',
+                incorrect: '/get_sound?type=incorrect'
+            };
 
-    // Check if the input is a valid number
-    if (isNaN(answer)) {
-        $('#result-message').text("Please enter a number.").css("color", "#ff4848");
-        return;
-    }
-
-    $.post('/check_answer', { answer: answer }, function (data) {
-        if (data.redirect) {
-            window.location.href = data.redirect;
-            return;
+            for (const [key, url] of Object.entries(soundUrls)) {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sound_url) {
+                            sounds[key] = new Audio(data.sound_url);
+                            console.log(`Preloaded ${key} sound: ${data.sound_url}`);
+                        }
+                    })
+                    .catch(error => console.error(`Error preloading ${key} sound:`, error));
+            }
         }
 
-        // Update the message color based on correctness
-        if (data.correct) {
-            $('#result-message').text(data.message).css("color", "#00d084"); // Green for correct answer
-        } else {
-            $('#result-message').text(data.message).css("color", "#ff4848"); // Red for incorrect answer
+        // Play sound function
+        function playSound(type) {
+            if (sounds[type]) {
+                sounds[type].play().catch(error => {
+                    console.error(`Error playing ${type} sound:`, error);
+                });
+            } else {
+                console.warn(`Sound for ${type} not preloaded.`);
+            }
         }
 
-        $('#attempts-left').text(data.attempts_left);
+        // Load sounds when document is ready
+        $(document).ready(function() {
+            preloadSounds();
 
-        // Handle puzzle completion or game over
-        if (data.correct || data.puzzle_completed) {
-            $('#submit-answer').prop('disabled', true);
-            $('#get-hint').prop('disabled', true);
-            $('#next-puzzle').prop('disabled', false);
-            clearInterval(timerInterval);
-        }
-
-        if (data.game_over) {
-            $('#result-message').text("Game Over! No attempts left.").css("color", "#ff4848");
-            $('#submit-answer').prop('disabled', true);
-            $('#get-hint').prop('disabled', true);
-            $('#next-puzzle').prop('disabled', false);
-            clearInterval(timerInterval);
-        }
-    }).fail(function () {
-        $('#result-message').text("Error checking the answer. Please try again.").css("color", "#ff4848");
-    });
-});
-
-
-        $('#get-hint').click(function() {
-            $.post('/get_hint', {}, function(data) {
-                $('#hint-message').text(data.hint);
-                $('#hints-left').text(data.hints_left);
-
-                if (data.hints_left <= 0) {
-                    $('#get-hint').prop('disabled', true);
+            $('#submit-answer').click(function () {
+                const answer = $('#answer').val().trim();
+                if (answer === "") {
+                    $('#result-message').text("Please enter an answer.").css("color", "#ff4848");
+                    playSound('incorrect');
+                    return;
                 }
-            }).fail(function() {
-                $('#hint-message').text("Error fetching hint. Please try again.");
+
+                if (isNaN(answer)) {
+                    $('#result-message').text("Please enter a number.").css("color", "#ff4848");
+                    playSound('incorrect');
+                    return;
+                }
+
+                $.post('/check_answer', { answer: answer }, function (data) {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                        return;
+                    }
+
+                    if (data.correct) {
+                        $('#result-message').text(data.message).css("color", "#00d084");
+                        playSound('correct');
+                    } else {
+                        $('#result-message').text(data.message).css("color", "#ff4848");
+                        playSound('incorrect');
+                    }
+
+                    $('#attempts-left').text(data.attempts_left);
+
+                    if (data.correct || data.puzzle_completed) {
+                        $('#submit-answer').prop('disabled', true);
+                        $('#get-hint').prop('disabled', true);
+                        $('#next-puzzle').prop('disabled', false);
+                        clearInterval(timerInterval);
+                    }
+
+                    if (data.game_over) {
+                        $('#result-message').text("Game Over! No attempts left.").css("color", "#ff4848");
+                        $('#submit-answer').prop('disabled', true);
+                        $('#get-hint').prop('disabled', true);
+                        $('#next-puzzle').prop('disabled', false);
+                        clearInterval(timerInterval);
+                    }
+                }).fail(function () {
+                    $('#result-message').text("Error checking the answer. Please try again.").css("color", "#ff4848");
+                });
             });
-        });
 
-        $('#next-puzzle').click(function() {
-            $.post('/next_puzzle', {}, function(response) {
-                if (response.status === "success") {
-                    $('#result-message').text('');
-                    $('#hint-message').text('');
-                    $('#answer').val('');
-                    $('#attempts-left').text(response.attempts_left);
-                    $('#hints-left').text(response.hints_left);
-                    $('#time-left').text(response.time_left);
-                    $('#correct-count').text(response.correct_count);
-                    $('#level').text(response.level);
-                    $('#submit-answer').prop('disabled', false);
-                    $('#get-hint').prop('disabled', false);
-                    $('#next-puzzle').prop('disabled', true);
-                    $('img').attr('src', response.question);
-                    $('#solution').text(response.solution); // for demo
+            // Event handler for get-hint
+            $('#get-hint').click(function() {
+                $.post('/get_hint', {}, function(data) {
+                    $('#hint-message').text(data.hint);
+                    $('#hints-left').text(data.hints_left);
 
-                    clearInterval(timerInterval);
-                    timeLeft = response.time_left;
-                    startTimer();
-                } else if (response.redirect) {
-                    window.location.href = response.redirect;
-                } else {
-                    $('#result-message').text("Error loading the next puzzle. Please try again.");
-                }
-            }).fail(function() {
-                $('#result-message').text("Failed to fetch the next puzzle. Please try again.");
+                    if (data.hints_left <= 0) {
+                        $('#get-hint').prop('disabled', true);
+                    }
+                }).fail(function() {
+                    $('#hint-message').text("Error fetching hint. Please try again.");
+                });
+            });
+
+            // Event handler for next-puzzle
+            $('#next-puzzle').click(function() {
+                $.post('/next_puzzle', {}, function(response) {
+                    if (response.status === "success") {
+                        $('#result-message').text('');
+                        $('#hint-message').text('');
+                        $('#answer').val('');
+                        $('#attempts-left').text(response.attempts_left);
+                        $('#hints-left').text(response.hints_left);
+                        $('#time-left').text(response.time_left);
+                        $('#correct-count').text(response.correct_count);
+                        $('#level').text(response.level);
+                        $('#submit-answer').prop('disabled', false);
+                        $('#get-hint').prop('disabled', false);
+                        $('#next-puzzle').prop('disabled', true);
+                        $('img').attr('src', response.question);
+                        $('#solution').text(response.solution);
+
+                        clearInterval(timerInterval);
+                        timeLeft = response.time_left;
+                        startTimer();
+                    } else if (response.redirect) {
+                        window.location.href = response.redirect;
+                    } else {
+                        $('#result-message').text("Error loading the next puzzle. Please try again.");
+                    }
+                }).fail(function() {
+                    $('#result-message').text("Failed to fetch the next puzzle. Please try again.");
+                });
             });
         });
     </script>
