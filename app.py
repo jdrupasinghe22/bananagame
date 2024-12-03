@@ -6,15 +6,16 @@ from datetime import timedelta
 import sys
 from dotenv import load_dotenv
 import os
+import bcrypt
 
 # Disable output buffering for print statements
 sys.stdout.reconfigure(line_buffering=True)
 
-app = Flask(__name__)
-app.secret_key = 'banana_secret_key'
-
 load_dotenv()  # Load environment variables from .env
 FREESOUND_API_KEY = os.getenv('FREESOUND_API_KEY')
+
+app = Flask(__name__)
+app.secret_key = os.getenv('BANANA_API_KEY')
 
 # Load player data from JSON file
 def load_players():
@@ -77,12 +78,16 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username in players and players[username]['password'] == password:
-            initialize_player_session(username)
-            return redirect(url_for('main_menu'))
-        else:
-            flash("Invalid username or password. Please try again.")
+
+        if username in players:
+            stored_hashed_password = players[username]['password'].encode('utf-8')
+            # Verify the password
+            if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password):
+                initialize_player_session(username)
+                return redirect(url_for('main_menu'))
+        flash("Invalid username or password. Please try again.")
     return render_template('login.html')
+
 
 # Route for the signup page
 @app.route('/signup', methods=['GET', 'POST'])
@@ -99,7 +104,13 @@ def signup():
         elif username in players:
             flash("Username already exists.")
         else:
-            players[username] = {'password': password, 'level': 0, 'correct_count': 0}
+            # Hash the password
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            players[username] = {
+                'password': hashed_password.decode('utf-8'),  # Store as a string
+                'level': 0,
+                'correct_count': 0
+            }
             save_players(players)
             initialize_player_session(username)
             return redirect(url_for('main_menu'))

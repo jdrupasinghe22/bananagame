@@ -1,42 +1,47 @@
 {
     "Winner": {
-        "password": "winnerplayer",
+        "password": "$2a$12$zpYlsiXUcPANajT5ZAb0aeJi42hihVWFN5ojFHIJQ4rrYbYMe92K.",
         "level": 5,
         "correct_count": 0
     },
     "playerl4": {
-        "password": "playerl4",
+        "password": "$2a$12$UUcMtO5PfkxA/2Ryyyc8e.xeA77Tv4yzyD9FgYjuERCIgkZyQuwAu",
         "level": 4,
         "correct_count": 1
     },
     "playerl3": {
-        "password": "playerl3",
+        "password": "$2a$12$lUuH6GWKhP.dJD8QWaHszupvYSmUSGPZcQy8f1HN/yOcII/KXrCKi",
         "level": 3,
         "correct_count": 1
     },
     "playerl2": {
-        "password": "playerl2",
+        "password": "$2a$12$XY46uNNgE.oeWOxP6/x4D.RfV7EwaPctR.JttENoGibkPsnoqnnLq",
         "level": 2,
         "correct_count": 1
     },
     "playerl1": {
-        "password": "playerl1",
+        "password": "$2a$12$06IpcPRufggdTkbDXbaXYe05P7ob2E.L3tauhyLhykIsZ3dZd78Oe",
         "level": 1,
         "correct_count": 1
     },
     "playerl0": {
-        "password": "playerl0",
+        "password": "$2a$12$ljzAEHO5UXlc.CyeZe2kBewPKy3Kt6KU/0f5dgVI3SWXfD4APXkWi",
         "level": 0,
         "correct_count": 1
     },
     "newplayer": {
-        "password": "newplayer",
+        "password": "$2a$12$Mq9C0YdLIeLwpVLpgWJu/ePi9LS3cve0qlQagLFZ2kL19GdU3vAJG",
         "level": 0,
         "correct_count": 0
     },
     "testplayer": {
-        "password": "testplayer",
+        "password": "$2a$12$hg7nc26ZRUJEiX/nBVzIWuaHul2XlVFbPxGrPf7VoFxtz1gd35aSi",
         "level": 1,
         "correct_count": 2
+    },
+    "secureplayer": {
+        "password": "$2b$12$9m90YXL3TyxFimyPzogSRu950gnFZvQI.mmHDzeKc2P7iyKP0m9uO",
+        "level": 0,
+        "correct_count": 0
     }
 }
