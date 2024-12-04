@@ -21,13 +21,13 @@
     },
     "playerl1": {
         "password": "$2a$12$06IpcPRufggdTkbDXbaXYe05P7ob2E.L3tauhyLhykIsZ3dZd78Oe",
-        "level": 1,
-        "correct_count": 1
+        "level": 2,
+        "correct_count": 0
     },
     "playerl0": {
         "password": "$2a$12$ljzAEHO5UXlc.CyeZe2kBewPKy3Kt6KU/0f5dgVI3SWXfD4APXkWi",
         "level": 0,
-        "correct_count": 1
+        "correct_count": 2
     },
     "newplayer": {
         "password": "$2a$12$Mq9C0YdLIeLwpVLpgWJu/ePi9LS3cve0qlQagLFZ2kL19GdU3vAJG",

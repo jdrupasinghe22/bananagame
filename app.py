@@ -1,21 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import requests
 import json
-import time
+from dotenv import load_dotenv
+import bcrypt
+
 from datetime import timedelta
 import sys
-from dotenv import load_dotenv
 import os
-import bcrypt
+
 
 # Disable output buffering for print statements
 sys.stdout.reconfigure(line_buffering=True)
 
-load_dotenv()  # Load environment variables from .env
+load_dotenv()  # Load environment variables
 FREESOUND_API_KEY = os.getenv('FREESOUND_API_KEY')
 
 app = Flask(__name__)
-app.secret_key = os.getenv('BANANA_API_KEY')
 
 # Load player data from JSON file
 def load_players():
